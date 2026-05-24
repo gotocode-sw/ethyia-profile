@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ===== ĐỔI GIF Ở ĐÂY ===== */
+  .bg-gif {
+    position: fixed;
+    inset: 0;
+    background-image: url('cartethyia-wuwa.gif'); /* <-- DÁN LINK GIF CỦA BẠN VÀO ĐÂY */
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45); /* Điều chỉnh độ tối: 0.0 (trong) ~ 0.8 (tối) */
+    backdrop-filter: blur(2px);
+    z-index: 1;
+  }
+
+  .card {
+    position: relative;
+    z-index: 2;
+    width: 360px;
+    max-width: 92vw;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    padding: 32px 24px 28px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== AVATAR ===== */
+  .avatar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.6);
+    object-fit: cover;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  /* Nếu không có ảnh thì dùng chữ tắt */
+  .avatar-placeholder {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  /* ===== TÊN & MÔ TẢ ===== */
+  .username {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+
+  .bio {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  /* ===== LINKS ===== */
+  .links { display: flex; flex-direction: column; gap: 12px; }
+
+  .link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 20px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+  }
+
+  .link-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.02);
+  }
+
+  .link-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 24px 6px rgba(255,255,255,0.5), 0 0 60px 10px rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.4);
+    border-color: rgba(255,255,255,0.8);
+  }
+
+  .link-btn.glow-animate {
+    animation: glowFade 0.6s ease forwards;
+  }
+
+  @keyframes glowFade {
+    0%   { box-shadow: 0 0 24px 6px rgba(255,255,255,0.6), 0 0 60px 10px rgba(255,255,255,0.3); background: rgba(255,255,255,0.4); }
+    100% { box-shadow: none; background: rgba(255,255,255,0.18); }
+  }
+
+  .link-btn .icon { font-size: 20px; }
+
+  /* Màu nút riêng — xoá nếu muốn tất cả cùng màu */
+  .btn-fb   { background: rgba(24, 119, 242, 0.5); border-color: rgba(24,119,242,0.5); }
+  .btn-yt   { background: rgba(255, 0, 0, 0.4);    border-color: rgba(255,0,0,0.4); }
+  .btn-ig   { background: rgba(193, 53, 132, 0.4); border-color: rgba(193,53,132,0.4); }
+  .btn-tt   { background: rgba(0, 0, 0, 0.5);      border-color: rgba(255,255,255,0.2); }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+  }
+</style>
+</head>
+<body>
+
+<!-- NỀN GIF -->
+<div class="bg-gif"></div>
+<div class="bg-overlay"></div>
+
+<!-- CARD CHÍNH -->
+<div class="card">
+
+  <!-- AVATAR: thay src bằng link ảnh của bạn -->
+  <div class="avatar-wrap">
+    <img class="avatar" src="aa65dde7af9a4c80bea6abb99f1e87f6.png" alt="avatar">
+  </div>
+
+  <!-- TÊN VÀ MÔ TẢ -->
+  <p class="username">@Ethyia_19</p>
+  <p class="bio">Contact: buivanthoaiylpt8386@gmail.com<br>✨ profile cá nhân</p>
+
+  <!-- DANH SÁCH LINK -->
+  <div class="links">
+
+    <!-- Mỗi <a> là một nút. Đổi href="..." thành link của bạn, đổi chữ trong thẻ -->
+    <a class="link-btn btn-fb" href="https://www.facebook.com/profile.php?id=61566589898674" target="_blank">
+      <span class="icon">📘</span> Facebook
+    </a>
+
+    <a class="link-btn btn-ig" href="https://instagram.com/yourhandle" target="_blank">
+      <span class="icon">📸</span> Instagram ntrb.long
+    </a>
+
+    <a class="link-btn btn-tt" href="https://www.tiktok.com/@ethyia_19" target="_blank">
+      <span class="icon">🎵</span> TikTok
+    </a>
+
+    <!-- THÊM NÚT MỚI: copy khối <a> trên, đổi class / href / tên -->
+
+  </div>
+
+<p class="footer">Bạn muốn tôi chia sẻ nữa sao maybe</p>
+</div>
+
+<script>
+  document.querySelectorAll('.link-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      this.classList.remove('glow-animate');
+      void this.offsetWidth;
+      this.classList.add('glow-animate');
+    });
+  });
+</script>
+
+</body>
+</html>
